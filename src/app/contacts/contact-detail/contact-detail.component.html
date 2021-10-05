@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-  <div class="row panel-heading">
+  <div class="panel-heading">
     <div class="col-xs-12">
 
       <!-- NAME GOES HERE -->
@@ -7,11 +7,13 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <!-- <img src="{{contact.imageUrl}}" alt="" style="max-height: 75px;"> -->
+        <h4>Bro {{contact.name}}</h4>
+        <img src="{{contact.imageUrl}}" alt="{{contact.name}}" class="img-responsive"
+        style="max-height: 300px;">
       </div>
       <div class="col-md-6">
         <div class="btn-toolbar">
-          <button class="btn btn-primary" type="submit">Edit</button>
+          <button class="btn btn-primary pull-bottom" type="submit">Edit</button>
           <button class="btn btn-danger" type="button">Delete</button>
         </div>
       </div>
@@ -19,9 +21,9 @@
   </div>
   <div class="row panel-body">
     <div class="col-xs-12">
-      <p style="font-weight: bold;">Email: </p> 
-      <p style="font-weight: bold;">Phone: </p> 
-    
+      <p style="font-weight: bold;">Email: {{contact.email}}</p>
+      <p style="font-weight: bold;">Phone: {{contact.phone}}</p>
+
     </div>
   </div>
 </div>
