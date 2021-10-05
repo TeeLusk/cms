@@ -17,7 +17,7 @@ export class MessageListComponent implements OnInit {
     new Message(
       '2',
       'Very Important Message 2',
-      'This is more important message',
+      'This is a more important message',
       'Tyler'
     ),
     new Message(
