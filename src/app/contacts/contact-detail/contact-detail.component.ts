@@ -12,7 +12,7 @@ export class ContactDetailComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }
