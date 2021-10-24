@@ -5,7 +5,7 @@
         <span class="title">Contacts</span>
       </div>
       <div class="col-xs-3">
-        <button class="btn btn-success">New Contact</button>
+        <button class="btn btn-success" routerLink="new">New Contact</button>
       </div>
     </div>
     <div class="panel-body">
@@ -14,7 +14,7 @@
           <cms-contact-item
             *ngFor="let contactEl of contacts"
             [contact]="contactEl"
-            (contactSelected)="onContactSelected(contactEl)"></cms-contact-item>
+            [routerLink]="[contactEl.id]"></cms-contact-item>
         </div>
       </div>
     </div>
