@@ -1,7 +1,6 @@
 import {EventEmitter, Injectable, OnInit} from '@angular/core';
 import { MOCKDOCUMENTS } from "./MOCKDOCUMENTS";
 import { Document } from "./document.model";
-import {Message} from "../messages/message.model";
 
 @Injectable({
   providedIn: 'root'
