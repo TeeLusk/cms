@@ -10,18 +10,22 @@ import {ContactDetailComponent} from "./contacts/contact-detail/contact-detail.c
 
 
 const appRoutes: Routes = [
-	{ path: '', redirectTo: '/documents', pathMatch: 'full'},
-	{ path: 'documents', component: DocumentsComponent, children: [
-			{ path: 'new', component: DocumentEditComponent },
-			{ path: ':id', component: DocumentDetailComponent },
-			{ path: ':id/edit', component: DocumentEditComponent }
-		] },
-	{ path: 'contacts', component: ContactsComponent, children: [
-			{ path: 'new', component: ContactEditComponent },
-			{ path: ':id', component: ContactDetailComponent },
-			{ path: ':id/edit', component: ContactEditComponent }
-		] },
-	{ path: 'messages', component: MessageListComponent}
+	{path: '', redirectTo: '/documents', pathMatch: 'full'},
+	{
+		path: 'documents', component: DocumentsComponent, children: [
+			{path: 'new', component: DocumentEditComponent},
+			{path: ':id', component: DocumentDetailComponent},
+			{path: ':id/edit', component: DocumentEditComponent}
+		]
+	},
+	{
+		path: 'contacts', component: ContactsComponent, children: [
+			{path: 'new', component: ContactEditComponent},
+			{path: ':id', component: ContactDetailComponent},
+			{path: ':id/edit', component: ContactEditComponent}
+		]
+	},
+	{path: 'messages', component: MessageListComponent}
 ]
 
 @NgModule({
