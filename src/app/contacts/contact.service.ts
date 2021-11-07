@@ -1,6 +1,6 @@
 import {Subject} from "rxjs";
 
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Contact} from './contact.model';
 import {MOCKCONTACTS} from './MOCKCONTACTS';
 
@@ -9,8 +9,7 @@ import {MOCKCONTACTS} from './MOCKCONTACTS';
 })
 export class ContactService {
 	contacts: Contact [] = [];
-	contactSelected = new EventEmitter<Contact>();
-	contactChangedEvent = new EventEmitter<Contact[]>();
+	contactSelected = new Subject<Contact>();
 	contactListChangedEvent = new Subject<Contact[]>();
 	maxContactId: number;
 
@@ -35,7 +34,7 @@ export class ContactService {
 			return;
 		}
 		this.contacts.splice(pos, 1);
-		this.contactChangedEvent.emit(this.contacts.slice());
+		this.contactListChangedEvent.next(this.contacts.slice());
 	}
 
 	getMaxId(): number {

@@ -1,6 +1,6 @@
 import {Subject} from "rxjs";
 
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {MOCKDOCUMENTS} from "./MOCKDOCUMENTS";
 import {Document} from "./document.model";
 
@@ -9,8 +9,7 @@ import {Document} from "./document.model";
 })
 export class DocumentService {
 	documents: Document[] = [];
-	documentSelected = new EventEmitter<Document>();
-	documentChangedEvent = new EventEmitter<Document[]>();
+	documentSelected = new Subject<Document>();
 	documentListChangedEvent = new Subject<Document[]>();
 	maxDocumentId: number;
 
@@ -39,7 +38,7 @@ export class DocumentService {
 		}
 
 		this.documents.splice(pos, 1);
-		this.documentChangedEvent.emit(this.documents.slice());
+		this.documentListChangedEvent.next(this.documents.slice());
 	}
 
 	getMaxId(): number {
