@@ -61,7 +61,7 @@ export class ContactService {
 
 	updateContact(originalContact: Contact, newContact: Contact) {
 		if (!originalContact || !newContact) {
-			return
+			return;
 		}
 
 		let pos = this.contacts.indexOf(originalContact);
