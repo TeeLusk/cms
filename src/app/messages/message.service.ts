@@ -1,16 +1,17 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Message} from "./message.model";
 import {MOCKMESSAGES} from "./MOCKMESSAGES";
+import {Subject} from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class MessageService {
 	messages: Message[] = [];
-	messageSelected = new EventEmitter<Message>();
-	messageChangedEvent = new EventEmitter<Message[]>();
+	messageSelected = new Subject<Message>();
+	messageChangedEvent = new Subject<Message[]>();
 
-  constructor() {
+	constructor() {
 		this.messages = MOCKMESSAGES;
 	}
 
@@ -24,6 +25,6 @@ export class MessageService {
 
 	addMessage(message: Message) {
 		this.messages.push(message);
-		this.messageChangedEvent.emit(this.messages.slice());
+		this.messageChangedEvent.next(this.messages.slice());
 	}
 }
