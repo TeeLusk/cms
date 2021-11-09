@@ -76,7 +76,6 @@
 			<div class="row">
 				<div class="form-group">
 					<label for="groupList">Group Contacts:</label>
-
 					<div class="row" id="groupList"
 							 style="min-height: 3rem;"
 							 dnd-droppable [dropZones]="['contactGroup']" (onDropSuccess)="addToGroup($event)">
@@ -89,8 +88,10 @@
 						</div>
 						<span class="dragMsg" *ngIf="groupContacts?.length < 1">Drag contacts in group here</span>
 					</div>
-
 				</div>
+			</div>
+			<div *ngIf="msgText" class="alert alert-danger">
+				{{msgText}}
 			</div>
 			<div *ngIf="!f.valid" class="alert alert-danger">
 				The Name and Email fields are required.

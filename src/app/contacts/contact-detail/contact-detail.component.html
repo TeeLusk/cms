@@ -1,26 +1,30 @@
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <div class="col-xs-12">
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <h4>Bro {{contact?.name}}</h4>
-        <img src="{{contact?.imageUrl}}" alt="{{contact.name}}" class="img-responsive"
-        style="max-height: 300px;">
-      </div>
-      <div class="col-md-6">
-        <div class="btn-toolbar">
-          <a class="btn btn-primary pull-bottom" routerLink="edit" >Edit</a>
-          <a class="btn btn-danger"  (click)="onDelete()">Delete</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row panel-body">
-    <div class="col-xs-12">
-      <p style="font-weight: bold;">Email: {{contact?.email}}</p>
-      <p style="font-weight: bold;">Phone: {{contact?.phone}}</p>
-
-    </div>
-  </div>
+	<div class="panel-heading">
+		<div class="col-xs-12">
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<h4>Bro {{contact?.name}}</h4>
+				<img src="{{contact?.imageUrl}}" alt="{{contact.name}}" class="img-responsive"
+						 style="max-height: 300px;">
+			</div>
+			<div class="col-md-6">
+				<div class="btn-toolbar">
+					<a class="btn btn-primary pull-bottom" routerLink="edit">Edit</a>
+					<a class="btn btn-danger" (click)="onDelete()">Delete</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row panel-body">
+		<div class="col-xs-12">
+			<p style="font-weight: bold;">Email: {{contact?.email}}</p>
+			<p style="font-weight: bold;">Phone: {{contact?.phone}}</p>
+		</div>
+		<div *ngFor="let contactEl of contact.group; let i = index">
+			<div>
+				<cms-contact-item class="col-sm-11" [contact]="contactEl"></cms-contact-item>
+			</div>
+		</div>
+	</div>
 </div>

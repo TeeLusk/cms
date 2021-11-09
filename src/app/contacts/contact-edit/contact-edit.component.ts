@@ -15,6 +15,7 @@ export class ContactEditComponent implements OnInit {
 	groupContacts: Contact[] = [];
 	editMode: boolean = false;
 	id: string;
+	msgText: string;
 
 	constructor(private contactService: ContactService,
 							private router: Router,
@@ -37,9 +38,9 @@ export class ContactEditComponent implements OnInit {
 					}
 					this.editMode = true;
 					this.contact = JSON.parse(JSON.stringify(this.originalContact));
-					
-					if (this.groupContacts) {
-						this.contact.group = JSON.parse(JSON.stringify(this.originalContact.group));
+
+					if (this.contact.group) {
+						this.groupContacts = JSON.parse(JSON.stringify(this.contact.group));
 					}
 				}
 			)
@@ -47,6 +48,7 @@ export class ContactEditComponent implements OnInit {
 
 	onSubmit(form: NgForm) {
 		let value = form.value;
+		console.log("Group contacts list:", this.groupContacts);
 		let newContact = new Contact(
 			value.id,
 			value.name,
@@ -76,15 +78,19 @@ export class ContactEditComponent implements OnInit {
 			}
 		}
 		return false;
+
 	}
 
 	addToGroup($event: any) {
 		const selectedContact: Contact = $event.dragData;
 		const invalidGroupContact = this.isInvalidContact(selectedContact);
 		if (invalidGroupContact) {
+			this.msgText = 'Contact cannot be added to the current group. It is already in the group or is the current contact.'
 			return;
 		}
+		this.msgText = '';
 		this.groupContacts.push(selectedContact);
+		console.log("Contact Added: ", this.groupContacts)
 	}
 
 
@@ -98,6 +104,4 @@ export class ContactEditComponent implements OnInit {
 	onCancel() {
 		this.router.navigateByUrl('contacts');
 	}
-
-
 }
