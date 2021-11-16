@@ -11,8 +11,6 @@ const messageRoutes = require('./server/routes/messages');
 const contactRoutes = require('./server/routes/contacts');
 const documentRoutes = require('./server/routes/documents');
 
-// ... ADD CODE TO IMPORT YOUR ROUTING FILES HERE ...
-
 var app = express(); // create an instance of express
 
 // Tell express to use the following parsers for POST data
