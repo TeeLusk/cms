@@ -5,7 +5,7 @@ const documentSchema = mongoose.Schema({
 	name: {type: String, required: true},
 	url: {type: String},
 	description: {type: String},
-	children: [{type: mongoose.Schema.Types.Document}]
+	// children: [{type: mongoose.Schema.Types.Document}]
 });
 
 module.exports = mongoose.model('Document', documentSchema);

@@ -17,15 +17,19 @@ export class MessageService {
 		this.maxMessageId = this.getMaxId();
 	}
 
+	sortAndSend() {
+		this.messages.sort((a, b) => (a.sender > b.sender) ? 1 : ((b.sender > a.sender) ? -1 : 0));
+		this.messageChangedEvent.next(this.messages.slice());
+	}
+
 	getMessages() {
 		this.client.get<Message[]>(
-			'https://wdd-430-cms-10db2-default-rtdb.firebaseio.com/messages.json'
+			'http://localhost:3000/messages'
 		).subscribe(
 			(messages: Message[]) => {
 				this.messages = messages;
 				this.maxMessageId = this.getMaxId();
-				this.messages.sort((a, b) => (a.sender > b.sender) ? 1 : ((b.sender > a.sender) ? -1 : 0));
-				this.messageChangedEvent.next(this.messages.slice());
+				this.sortAndSend()
 			},
 			(error: any) => {
 				console.log(error)
@@ -33,14 +37,28 @@ export class MessageService {
 		);
 	}
 
+	//Delete message?
+
 	getMessage(id: string): Message {
 		return this.messages.find(message => message.id == id);
 	}
 
 	addMessage(message: Message) {
-		this.messages.push(message);
-		// this.messageChangedEvent.next(this.messages.slice());
-		this.storeMessages();
+		if (!message) {
+			return;
+		}
+		message.id = '';
+		const headers = new HttpHeaders({'Content-Type': 'application/json'});
+		this.client.post<{ message: string, messageObj: Message }>('http://localhost:3000/messages',
+			message,
+			{headers: headers})
+			.subscribe(
+				(responseData) => {
+					// add new document to documents
+					this.messages.push(responseData.messageObj);
+					this.sortAndSend();
+				}
+			);
 	}
 
 	getMaxId(): number {
@@ -57,7 +75,7 @@ export class MessageService {
 	storeMessages() {
 		let messages = JSON.stringify(this.messages)
 		const headers = new HttpHeaders({'Content-Type': 'application/json'});
-		this.client.put('https://wdd-430-cms-10db2-default-rtdb.firebaseio.com/messages.json'
+		this.client.put('http://localhost:3000/messages'
 			, messages
 			, {headers: headers})
 			.subscribe(

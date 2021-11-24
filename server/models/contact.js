@@ -9,3 +9,5 @@ const contactSchema = mongoose.Schema({
 	group: [{type: mongoose.Schema.Types.ObjectId, ref: 'Contact'}]
 
 })
+
+module.exports = mongoose.model('Contact', contactSchema);
