@@ -1,20 +1,30 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
-import { Message } from '../message.model';
+import {Message} from '../message.model';
 import {ContactService} from "../../contacts/contact.service";
 import {Contact} from "../../contacts/contact.model";
 
 @Component({
-  selector: 'cms-message-item',
-  templateUrl: './message-item.component.html',
-  styleUrls: ['./message-item.component.css']
+	selector: 'cms-message-item',
+	templateUrl: './message-item.component.html',
+	styleUrls: ['./message-item.component.css']
 })
-export class MessageItemComponent implements OnInit{
+export class MessageItemComponent implements OnInit {
 	@Input() message: Message;
-	messageSender: string;
-	constructor(private contactService: ContactService) {}
+	messageSender: Contact;
+	contact;
+
+	constructor(private contactService: ContactService) {
+	}
+
 	ngOnInit() {
-		const contact: Contact = this.contactService.getContact(this.message.sender);
-		this.messageSender = contact.name;
+		this.contactService.getContact('107')
+			.subscribe(
+				response => {
+					this.contact = response.contact;
+					this.messageSender = this.contact;
+				}
+			)
+
 	}
 }

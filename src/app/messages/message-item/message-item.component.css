@@ -1,14 +1,23 @@
 .messageHeader {
-  background-color: azure;
-  border: solid thin black;
-  border-radius: 10px;
-  padding: 0.4rem;
-  font-size: 1.5rem;
+	background-color: azure;
+	border: solid thin black;
+	border-radius: 10px;
+	padding: 0.4rem;
+	font-size: 1.5rem;
 }
+
+.messageSubject {
+	border-radius: 10px;
+	padding: 5px;
+	margin-top: 0.25rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
 .messageText {
-  border-radius: 10px;
-  padding: 5px;
-  margin-top: 0.25rem;
-  margin-left: 1rem;
-  font-size: 1.5rem;
+	border-radius: 10px;
+	padding: 5px;
+	margin-top: 0.25rem;
+	margin-left: 1rem;
+	font-size: 1.5rem;
 }

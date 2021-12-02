@@ -14,7 +14,6 @@ export class DocumentService {
 	maxDocumentId: number;
 
 	constructor(private client: HttpClient) {
-		// this.documents = MOCKDOCUMENTS;
 		this.maxDocumentId = this.getMaxId();
 	}
 
@@ -24,13 +23,12 @@ export class DocumentService {
 	}
 
 	getDocuments() {
-		this.client.get<Document[]>(
+		this.client.get<{ message: string, documents: Document[] }>(
 			'http://localhost:3000/documents'
 		).subscribe(
 			// success method
-			(documents: Document[]) => {
-				this.documents = documents;
-				this.maxDocumentId = this.getMaxId();
+			(responseData) => {
+				this.documents = responseData.documents;
 				this.sortAndSend();
 			},
 			// error method
@@ -81,12 +79,9 @@ export class DocumentService {
 		if (!document) {
 			return;
 		}
-
 		// make sure id of the new Document is empty
 		document.id = '';
-
 		const headers = new HttpHeaders({'Content-Type': 'application/json'});
-
 		// add to database
 		this.client.post<{ message: string, document: Document }>('http://localhost:3000/documents',
 			document,
@@ -104,19 +99,14 @@ export class DocumentService {
 		if (!originalDocument || !newDocument) {
 			return;
 		}
-
 		const pos = this.documents.findIndex(d => d.id === originalDocument.id);
-
 		if (pos < 0) {
 			return;
 		}
-
 		// set the id of the new Document to the id of the old Document
 		newDocument.id = originalDocument.id;
 		// newDocument._id = originalDocument._id;
-
 		const headers = new HttpHeaders({'Content-Type': 'application/json'});
-
 		// update database
 		this.client.put('http://localhost:3000/documents/' + originalDocument.id,
 			newDocument, {headers: headers})
@@ -126,17 +116,17 @@ export class DocumentService {
 					this.sortAndSend();
 				}
 			);
-	}
+	};
 
-	storeDocuments() {
-		let documents = JSON.stringify(this.documents)
-		const headers = new HttpHeaders({'Content-Type': 'application/json'});
-		this.client.put('http://localhost:3000/documents', documents
-			, {headers: headers})
-			.subscribe(
-				() => {
-					this.documentListChangedEvent.next(this.documents.slice());
-				}
-			);
-	}
+	// storeDocuments() {
+	// 	let documents = JSON.stringify(this.documents)
+	// 	const headers = new HttpHeaders({'Content-Type': 'application/json'});
+	// 	this.client.put('http://localhost:3000/documents', documents
+	// 		, {headers: headers})
+	// 		.subscribe(
+	// 			() => {
+	// 				this.documentListChangedEvent.next(this.documents.slice());
+	// 			}
+	// 		);
+	// }
 }

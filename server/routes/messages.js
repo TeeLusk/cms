@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 const sequenceGenerator = require('./sequenceGenerator');
 const Message = require('../models/message');
-const Document = require("../models/document");
+const Contact = require('../models/contact');
 
 router.get('/', (req, res, next) => {
 	Message.find()
-		// .populate('sender')
+		.populate('sender')
 		.then(messages => {
 			res
 				.status(200)
@@ -25,17 +25,26 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
 	const maxMessageId = sequenceGenerator.nextId("messages");
+	// let senderId = Contact.findOne({id: '107'})
+	// 	.then(contact => {
+	// 		senderId = contact._id
+	// 	})
+	// 	.catch(err => {
+	// 		console.log(err)
+	// 	});
 
+	console.log("MESSAGE POST DATA: \n subject: ", req.body.subject, " message: ", req.body.msgText, " sender: ");
 	const message = new Message({
 		id: maxMessageId,
 		subject: req.body.subject,
-		msgText: req.body.message,
+		msgText: req.body.msgText,
+		sender: req.body.sender
 	});
 
 	message.save()
 		.then(createdMessage => {
 			res.status(201).json({
-				message: 'Message added sucessfully',
+				responseMsg: 'Message added sucessfully',
 				message: createdMessage
 			})
 		})

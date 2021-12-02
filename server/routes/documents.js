@@ -12,9 +12,7 @@ router.get('/', (req, res, next) => {
 				.json({
 					message: 'Documents fetched successfully',
 					documents: documents
-				})
-			console.log("----------------------------");
-			console.log("GET DOCS", documents);
+				});
 		})
 		.catch(error => {
 			res.status(500).json({

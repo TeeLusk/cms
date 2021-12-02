@@ -3,23 +3,39 @@ var router = express.Router();
 var sequenceGenerator = require('./sequenceGenerator');
 const Contact = require('../models/contact');
 
+
 router.get('/', (req, res, next) => {
 	Contact.find()
 		.populate('group')
 		.then(contacts => {
-			res
-				.status(200)
-				.json({
-					message: 'Contacts fetched successfully',
-					contacts: contacts
-				})
+			res.status(200).json({
+				message: 'Contacts fetched successfully!',
+				contacts: contacts
+			});
 		})
 		.catch(error => {
 			res.status(500).json({
 				message: 'An error occurred',
 				error: error
-			})
+			});
+		});
+});
+
+router.get('/:id', (req, res, next) => {
+	Contact.findOne({"id": req.params.id})
+		.populate('group')
+		.then(contact => {
+			res.status(200).json({
+				message: 'Contacts fetched successfully!',
+				contact: contact
+			});
 		})
+		.catch(error => {
+			res.status(500).json({
+				message: 'An error occurred',
+				error: error
+			});
+		});
 });
 
 router.post('/', (req, res, next) => {
@@ -77,6 +93,7 @@ router.put('/:id', (req, res, next) => {
 				message: 'Contact not found.',
 				error: {contact: 'Contact not found'}
 			});
+			console.log(error);
 		});
 });
 

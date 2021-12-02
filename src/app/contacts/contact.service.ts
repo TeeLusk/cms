@@ -11,10 +11,8 @@ export class ContactService {
 	contacts: Contact [] = [];
 	contactSelected = new Subject<Contact>();
 	contactListChangedEvent = new Subject<Contact[]>();
-	maxContactId: number;
 
 	constructor(private client: HttpClient) {
-		// this.contacts = MOCKCONTACTS;
 	}
 
 	sortAndSend() {
@@ -23,12 +21,11 @@ export class ContactService {
 	}
 
 	getContacts() {
-		this.client.get<Contact[]>(
+		this.client.get<{ message: string, contacts: Contact[] }>(
 			'http://localhost:3000/contacts'
 		).subscribe(
-			(contacts: Contact[]) => {
-				this.contacts = contacts;
-				this.maxContactId = this.getMaxId();
+			(responseData) => {
+				this.contacts = responseData.contacts;
 				this.sortAndSend()
 			},
 			(error: any) => {
@@ -37,8 +34,8 @@ export class ContactService {
 		)
 	}
 
-	getContact(id: string): Contact {
-		return this.contacts.find(contact => contact.id == id);
+	getContact(id: string) {
+		return this.client.get<{ message: string, contact: Contact }>('http://localhost:3000/contacts/' + id);
 	}
 
 	deleteContact(contact: Contact) {
@@ -59,17 +56,6 @@ export class ContactService {
 				}
 			)
 
-	}
-
-	getMaxId(): number {
-		let maxId = 0;
-		this.contacts.forEach(contact => {
-			let currentId = parseInt(contact.id);
-			if (currentId > maxId) {
-				maxId = currentId
-			}
-		})
-		return maxId;
 	}
 
 	addContact(contact: Contact) {
@@ -118,16 +104,5 @@ export class ContactService {
 				}
 			);
 	}
-
-	storeContacts() {
-		let contacts = JSON.stringify(this.contacts);
-		const headers = new HttpHeaders({'Content-Type': 'application/json'});
-		this.client.put('http://localhost:3000/contacts', contacts
-			, {headers: headers})
-			.subscribe(
-				() => {
-					this.contactListChangedEvent.next(this.contacts.slice());
-				}
-			)
-	}
+	
 }
