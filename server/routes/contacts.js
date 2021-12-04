@@ -68,6 +68,7 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
 	Contact.findOne({id: req.params.id})
 		.then(contact => {
+			console.log("Passed Updated ID", req.params.id)
 			contact.id = maxContactId;
 			contact.name = req.body.name;
 			contact.email = req.body.email;
@@ -77,8 +78,9 @@ router.put('/:id', (req, res, next) => {
 
 			Contact.updateOne({id: req.params.id}, contact)
 				.then(result => {
+					console.log("Updated contact", contact)
 					res.status(204).json({
-						message: 'Document updated successfully'
+						message: 'Contact updated successfully'
 					})
 				})
 				.catch(error => {

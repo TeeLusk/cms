@@ -34,7 +34,7 @@ export class ContactEditComponent implements OnInit {
 					this.contactService.getContact(id)
 						.subscribe(
 							response => {
-								// this.originalContact = response.contact;
+								this.originalContact = response.contact;
 								this.contact = response.contact;
 							}
 						)
@@ -54,7 +54,6 @@ export class ContactEditComponent implements OnInit {
 
 	onSubmit(form: NgForm) {
 		let value = form.value;
-		console.log("Group contacts list:", this.groupContacts);
 		let newContact = new Contact(
 			value.id,
 			value.name,

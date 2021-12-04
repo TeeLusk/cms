@@ -95,6 +95,7 @@ export class ContactService {
 		newContact.id = originalContact.id;
 		const headers = new HttpHeaders({'Content-Type': 'application/json'});
 		// update database
+		console.log("PUT REQ", "ID", originalContact.id, "New Contact Object", newContact)
 		this.client.put('http://localhost:3000/contacts/' + originalContact.id,
 			newContact, {headers: headers})
 			.subscribe(
@@ -104,5 +105,5 @@ export class ContactService {
 				}
 			);
 	}
-	
+
 }
